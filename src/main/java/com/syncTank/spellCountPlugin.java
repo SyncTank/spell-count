@@ -3,14 +3,13 @@ package com.syncTank;
 import com.google.inject.Provides;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.ChatMessageType;
-import net.runelite.api.Client;
-import net.runelite.api.GameState;
+import net.runelite.api.*;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 
 @Slf4j
 @PluginDescriptor(
@@ -27,13 +26,13 @@ public class spellCountPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		log.info("Example started!");
+
 	}
 
 	@Override
 	protected void shutDown() throws Exception
 	{
-		log.info("Example stopped!");
+
 	}
 
 	@Subscribe
@@ -41,7 +40,12 @@ public class spellCountPlugin extends Plugin
 	{
 		if (gameStateChanged.getGameState() == GameState.LOGGED_IN)
 		{
-			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Example says " + config.greeting(), null);
+			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "LOG", "Example says " + config.greeting(), null);
+		}
+
+		if(gameStateChanged.getGameState() == GameState.LOGGED_IN)
+		{
+
 		}
 	}
 
@@ -50,4 +54,6 @@ public class spellCountPlugin extends Plugin
 	{
 		return configManager.getConfig(spellCountConfig.class);
 	}
+
+
 }
