@@ -26,10 +26,11 @@ public class spellCountPlugin extends Plugin
 	@Inject
 	private spellCountConfig config;
 
+	private int itemSlots;
+
 	@Override
 	protected void startUp() throws Exception
 	{
-
 	}
 
 	@Override
@@ -44,15 +45,23 @@ public class spellCountPlugin extends Plugin
 		if (gameStateChanged.getGameState() == GameState.LOGGED_IN)
 		{
 			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "LOG", "Example says " + "test " + config.greeting(), null);
+			runeSearch();
 		}
 	}
 
-	@Subscribe
-	public void onGameTick(GameTick tick){
+	private void runeSearch(){
 		final ItemContainer container = client.getItemContainer(InventoryID.INVENTORY);
-		client.addChatMessage(ChatMessageType.GAMEMESSAGE, "LOG", "Bla bla bla", null);
-		client.addChatMessage(ChatMessageType.GAMEMESSAGE, "LOG", "Amount of items: " + container.getItem(0) + config.greeting(), null);
+		for (Item exis : container.getItems()) {
+			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "LOG", "Bla bla bla " + exis, null);
+		}
 	}
+	
+	//@Subscribe
+	//public void onGameTick(GameTick tick){
+	//	final ItemContainer container = client.getItemContainer(InventoryID.INVENTORY);
+	//	client.addChatMessage(ChatMessageType.GAMEMESSAGE, "LOG", "Bla bla bla " + itemSlots, null);
+	//	client.addChatMessage(ChatMessageType.GAMEMESSAGE, "LOG", "Amount of items: " + container.getItem(0) + config.greeting(), null);
+	//}
 
 	@Provides
 	spellCountConfig provideConfig(ConfigManager configManager)
