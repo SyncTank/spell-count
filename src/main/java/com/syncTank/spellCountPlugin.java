@@ -5,10 +5,13 @@ import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.events.GameStateChanged;
+import net.runelite.api.events.GameTick;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 
 @Slf4j
@@ -40,13 +43,15 @@ public class spellCountPlugin extends Plugin
 	{
 		if (gameStateChanged.getGameState() == GameState.LOGGED_IN)
 		{
-			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "LOG", "Example says " + config.greeting(), null);
+			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "LOG", "Example says " + "test " + config.greeting(), null);
 		}
+	}
 
-		if(gameStateChanged.getGameState() == GameState.LOGGED_IN)
-		{
-
-		}
+	@Subscribe
+	public void onGameTick(GameTick tick){
+		final ItemContainer container = client.getItemContainer(InventoryID.INVENTORY);
+		client.addChatMessage(ChatMessageType.GAMEMESSAGE, "LOG", "Bla bla bla", null);
+		client.addChatMessage(ChatMessageType.GAMEMESSAGE, "LOG", "Amount of items: " + container.getItem(0) + config.greeting(), null);
 	}
 
 	@Provides
